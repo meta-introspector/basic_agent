@@ -18,3 +18,14 @@ RUN apt-get update && apt-get install -y \
     curl jq wget git \
     strace ltrace dnsutils  net-tools \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# add in browsers for now to make it easier
+RUN apt-get update && apt-get install -y \
+    chromium-driver firefox-esr ca-certificates gcc \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
+## now install the agent protocol in opt
+RUN git clone https://github.com/meta-introspector/agent-protocol-sdk-python /opt/agent-protocol
+
+RUN ${POETRY_HOME}/bin/pip install -e /opt/agent-protocol/
